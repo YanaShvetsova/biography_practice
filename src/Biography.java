@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Biography {
@@ -8,17 +9,13 @@ public class Biography {
          * WORK ON BOOK AND AUTHOR CLASSES FIRST
          This will be our actual program that we define author and his books
          In this program we will write the biography of Stefan Zweig, an Austrian novelist.
-
-
          Write a program that will get information from user and
          -Print information for the favorite author
          -Print information of the books of favorite author
-
          Full name = Stefan Zweig
          County = Austria
          Is still alive: No (28 November 1881 – 22 February 1942)
          Some of his books as listed below:
-
          BookName                            Genre           TotalPage
          Amok                                tale            189
          The Royal Game                      novella         53
@@ -33,55 +30,71 @@ public class Biography {
         Book{name='The Royal Game', tale='novella', page=53}
         Book{name='24 Hours in the Life of a Woman', tale='novella', page=80}
          */
+
         Scanner input = new Scanner(System.in);
-        System.out.println("What is your favorite author's first name?");
+
+        /*
+        What is your favorite author’s first name?
+        What is your favorite author’s last name?
+        Where is your favorite author from?
+        Is your favorite author alive? Y/N
+        If user enters Y, then ask How old is your favorite author? If, user enters N, then skip this question.
+        Then, program will ask about user’s favorite author’s books.
+         */
+
+        System.out.println("What is your favorite author’s first name?");
         String firstName = input.nextLine();
 
-        System.out.println("What is your favorite author's last name?");
+        System.out.println("What is your favorite author’s last name?");
         String lastName = input.nextLine();
 
         System.out.println("Where is your favorite author from?");
         String country = input.nextLine();
 
         System.out.println("Is your favorite author alive? Y/N");
-        boolean isAlive = input.next().toUpperCase().startsWith("Y");
+        String isAliveInput = input.nextLine();
 
+        while (!isAliveInput.equalsIgnoreCase("Y") && !isAliveInput.equalsIgnoreCase("N")) {
+            System.out.println("Input was invalid, please use only 'Y' or 'N'\n");
+            System.out.println("Is your favorite author alive? Y/N");
+            isAliveInput = input.nextLine();
+        }
+
+        boolean isAlive = isAliveInput.equalsIgnoreCase("Y");
         int age = 0;
 
         if (isAlive) {
-            System.out.println("How old is your favorite author?");
+            System.out.println("What is the authors age?");
             age = input.nextInt();
-        }
-        ArrayList<Book> books = new ArrayList<>();
-        String bookInfo = "";
-        do {
-            System.out.println("Would you like to enter book info? (Y/N) ");
-            bookInfo = input.nextLine();
-
-            if (bookInfo.toUpperCase().startsWith("Y")) {
-                System.out.println("What is the name of the book? ");
-                String name = input.nextLine();
-
-                System.out.println("What is genre of the book?");
-                String genre = input.next();
-
-                System.out.println("How many pages does book have?");
-                int numberOfPages = input.nextInt();
-                books.add(new Book(name, genre, numberOfPages)); //makes it into a list
-
-            } else System.out.println("THE END RESULT OF ABOVE PROGRAM");
-
-
+            input.nextLine();
         }
 
-        while (bookInfo.toUpperCase().startsWith("Y")); //when user inputs Y for book information
-        Author author = new Author(firstName, lastName, country, isAlive);
-        System.out.println("Author's information = " + author);
-        System.out.println("Author's books are as listed below: ");
+        System.out.println("Would you like to enter book information? (Y/N)");
+        String bookCheck = input.nextLine();
+        List<Book> listOfBooks = new ArrayList<>();
 
-        for (Book b : books) {
-            System.out.println(b);
+        while (bookCheck.equalsIgnoreCase("Y")) {
+            /* Program: What is the name of the book?
+                Program: What is genre of the book?
+                Program: How many pages does book have?
+             */
+            System.out.println("What is the name of the book?");
+            String bookName = input.nextLine();
 
+            System.out.println("What is genre of the book?");
+            String bookGenre = input.nextLine();
+
+            System.out.println("How many pages does book have?");
+            int page = input.nextInt();
+            input.nextLine();
+
+            Book bookInfo = new Book(bookName, bookGenre, page);
+            listOfBooks.add(bookInfo);
+
+            System.out.println("Would you like to enter book information? (Y/N)");
+            bookCheck = input.nextLine();
         }
+
+        System.out.println(new Author(firstName, lastName, country, isAlive, age, listOfBooks));
     }
-    }
+}

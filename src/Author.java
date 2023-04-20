@@ -1,5 +1,5 @@
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Author {
 
@@ -9,25 +9,32 @@ public class Author {
      Define Author class fields as firstName, lastName, country, isAlive, age, list of books
      */
 
-    //Create 6 args custom constructor here
-    public Author (String firstName, String lastName, String country, boolean isAlive){
-        this.firstName=firstName;
-        this.lastName= lastName;
+    // Create 6 args custom constructor here
+    public Author(String firstName, String lastName, String country, boolean isAlive,
+                  int age, List<Book> listOfBooks){
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.country = country;
-        this.isAlive=isAlive;
-        //this.age=age;
-        //this.listOfBooks=listOfBooks; ???
-
+        this.isAlive = isAlive;
+        this.age = age;
+        this.listOfBooks = listOfBooks;
     }
+
+//    public Author(){
+//        Scanner input = new Scanner(System.in);
+//        System.out.println();
+//    }
 
     /*
         Define instance variables here
         NOTE: Books must be defined as a List of Objects of Book class not String
     */
-    public String firstName,lastName,country;
-    public int age;
-    public boolean isAlive;
-    public ArrayList<Book> listOfBooks;
+    String firstName;
+    String lastName;
+    String country;
+    boolean isAlive;
+    int age;
+    List<Book> listOfBooks;
 
 
     /*
@@ -36,11 +43,29 @@ public class Author {
 
     @Override
     public String toString() {
-        return "Author{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", country='" + country + '\'' +
-                ", isAlive=" + isAlive +
-                '}';
+        String output = "\nAuthor's information = ";
+        if (age == 0) {
+            output += "Author{" +
+                    "firstName='" + firstName + '\'' +
+                    ", lastName='" + lastName + '\'' +
+                    ", country='" + country + '\'' +
+                    ", isAlive=" + isAlive +
+                    '}';
+        } else {
+            output += "Author{" +
+                    "firstName='" + firstName + '\'' +
+                    ", lastName='" + lastName + '\'' +
+                    ", country='" + country + '\'' +
+                    ", isAlive=" + isAlive +
+                    ", age=" + age +
+                    '}';
+        }
+        output += "\nAuthor's books are as listed below:";
+
+        for (Book book : listOfBooks) {
+            output += book;
+        }
+
+        return output;
     }
 }
